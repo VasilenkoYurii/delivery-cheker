@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { RotatingLines } from "react-loader-spinner";
@@ -10,12 +10,6 @@ import {
   selectUserDataInvoisec,
 } from "../../redux/selectors";
 import { Container, InfoBox } from "./InvoicePage.styled";
-
-interface InvoiceData {
-  status: string;
-  sending: string;
-  receiving: string;
-}
 
 export const InvoicePage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -39,31 +33,6 @@ export const InvoicePage = () => {
   const hendleClearDataInvoices = () => {
     dispatch(clearDataInvoices());
   };
-
-  // const getWarehouses = async () => {
-  //   const requestData = {
-  //     apiKey: "4adb1c473346a6d181476c1dc87182ee",
-  //     modelName: "Address",
-  //     calledMethod: "getWarehouses",
-  //     methodProperties: {
-  //       Language: "uk", // Язык запроса (может быть "ru" или "uk")
-  //       CityName: "Київ",
-  //     },
-  //   };
-
-  //   try {
-  //     const response = await axios.post(
-  //       "https://api.novaposhta.ua/v2.0/json/",
-  //       requestData
-  //     );
-
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error("Ошибка запроса:", error);
-  //   }
-  // };
-
-  // getWarehouses();
 
   return (
     <Container>

@@ -14,3 +14,7 @@ export const selectUserDataInvoisec = (state: {
 
 export const selectIsLoading = (state: { invoice: { isLoading: boolean } }) =>
   state.invoice.isLoading;
+
+export const selectOfficeList = (state: {
+  invoice: { officeList: object[] };
+}) => state.invoice.officeList;

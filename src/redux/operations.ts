@@ -43,3 +43,33 @@ export const clearDataInvoices = createAsyncThunk(
     return;
   }
 );
+
+export const getOfficeListByCity = createAsyncThunk(
+  "auth/getOfficeListByCity",
+  async (credentials: string, thunkAPI: any) => {
+    console.log(credentials);
+
+    const requestData = {
+      apiKey: API_KEY,
+      modelName: "Address",
+      calledMethod: "getWarehouses",
+      methodProperties: {
+        Language: "uk",
+        CityName: `${credentials}`,
+      },
+    };
+
+    try {
+      const response = await axios.post(
+        "https://api.novaposhta.ua/v2.0/json/",
+        requestData
+      );
+
+      console.log(response.data);
+
+      return response.data;
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);

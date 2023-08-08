@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { toast } from "react-hot-toast";
-import { getInvoiceData, clearDataInvoices } from "./operations";
+import { toast } from "react-hot-toast";
+import {
+  getInvoiceData,
+  clearDataInvoices,
+  getOfficeListByCity,
+} from "./operations";
 
 interface InvoiceState {
   invoiceData: {
@@ -8,8 +12,9 @@ interface InvoiceState {
     sending: string;
     receiving: string;
   };
-  userDataInvoices: string[]; // явное указание типа массива
+  userDataInvoices: string[];
   isLoading: boolean;
+  officeList: object[];
 }
 
 const initialState: InvoiceState = {
@@ -19,6 +24,7 @@ const initialState: InvoiceState = {
     receiving: "",
   },
   userDataInvoices: [],
+  officeList: [],
   isLoading: false,
 };
 
@@ -56,8 +62,23 @@ const invoiceSlice = createSlice({
       })
       .addCase(clearDataInvoices.fulfilled, (state) => {
         state.userDataInvoices = [];
-      });
+      })
+      .addCase(getOfficeListByCity.fulfilled, (state, { payload }) => {
+        state.officeList = payload.data;
+
+        toast.success(
+          `У вашому місті поштоматів та відділень Нової пошти знайдено: ${payload.data.length}!`,
+          {
+            style: {
+              width: "300px",
+              borderRadius: "10px",
+              fontSize: "20px",
+            },
+          }
+        );
+      })
+      .addCase(getOfficeListByCity.rejected, (state) => {});
   },
 });
-
+getOfficeListByCity;
 export const invoiceReducer = invoiceSlice.reducer;
