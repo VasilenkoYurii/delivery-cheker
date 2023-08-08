@@ -3,15 +3,22 @@ import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 
 import { AppBar } from "../AppBar/AppBar";
+import { OutletBox, FooterStyled } from "./Layout.styled";
 
 export const Layout = () => {
   return (
     <>
       <AppBar />
       <Suspense>
-        <Outlet />
+        <OutletBox>
+          <Outlet />
+        </OutletBox>
       </Suspense>
-      <footer>crated by</footer>
+      {/* <FooterStyled>
+        <p>Crated by</p>
+
+        <a href=""> VasilenkoYuri</a>
+      </FooterStyled> */}
       <Toaster position="top-right" reverseOrder={false} />
     </>
   );

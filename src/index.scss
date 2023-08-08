@@ -1,10 +1,15 @@
-@import-normalize; /* bring in normalize.css styles */
+// @import-normalize; /* bring in normalize.css styles */
+@import "./shared/basicStyles/fonts.scss";
+
+html,
+body {
+  height: 100%;
+}
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Caveat", "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Poppins", sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* overflow: hidden; */
@@ -16,7 +21,9 @@ code {
 }
 
 #root {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 ul {

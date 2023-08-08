@@ -1,7 +1,10 @@
+import { Nav, NavLinkStyled } from "./Navigation.styled";
+
 export const Navigation = () => {
   return (
-    <nav>
-      <a href="">home</a>
-    </nav>
+    <Nav>
+      <NavLinkStyled to="/">Перевірити ТТН</NavLinkStyled>
+      <NavLinkStyled to="/offices">Список відділень</NavLinkStyled>
+    </Nav>
   );
 };
