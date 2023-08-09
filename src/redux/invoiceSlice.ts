@@ -28,8 +28,6 @@ const invoiceSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getInvoiceData.fulfilled, (state, { payload }) => {
-        console.log(payload);
-
         let newInvoiceData: InvoiceData = {
           status: "ТТН не знайдено",
           sending: "",
@@ -52,37 +50,38 @@ const invoiceSlice = createSlice({
       })
       .addCase(getInvoiceData.rejected, (state) => {
         state.isLoading = false;
-        // toast.error("Something went wrong, please try again.", {
-        //   style: {
-        //     width: "300px",
-        //     height: "40px",
-        //     borderRadius: "10px",
-        //     fontSize: "20px",
-        //   },
-        // });
       })
       .addCase(clearDataInvoices.fulfilled, (state) => {
         state.userDataInvoices = [];
       })
+      .addCase(getOfficeListByCity.pending, (state) => {
+        state.isLoading = true;
+        state.officeList = [];
+      })
       .addCase(getOfficeListByCity.fulfilled, (state, { payload }) => {
+        if (payload.data.length === 0) {
+          toast.error(
+            "В нас не вийшло знайти відділення нової пошти у ваному місті.",
+            {
+              style: {
+                width: "300px",
+                borderRadius: "10px",
+                fontSize: "20px",
+              },
+            }
+          );
+        }
+
         const newList = payload.data.map(({ Description, SiteKey }: Office) => {
           return { Description, SiteKey };
         });
 
         state.officeList = newList;
-
-        toast.success(
-          `У вашому місті поштоматів та відділень Нової пошти знайдено: ${payload.data.length}!`,
-          {
-            style: {
-              width: "300px",
-              borderRadius: "10px",
-              fontSize: "20px",
-            },
-          }
-        );
+        state.isLoading = false;
       })
-      .addCase(getOfficeListByCity.rejected, (state) => {});
+      .addCase(getOfficeListByCity.rejected, (state) => {
+        state.isLoading = false;
+      });
   },
 });
 getOfficeListByCity;

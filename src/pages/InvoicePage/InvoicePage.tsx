@@ -32,7 +32,6 @@ export const InvoicePage = () => {
 
   const hendleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(invoice);
 
     dispatch(getInvoiceData(invoice));
   };
