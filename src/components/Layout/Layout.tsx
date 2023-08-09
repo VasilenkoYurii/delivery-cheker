@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
+import { FaGithub } from "react-icons/fa";
 
 import { AppBar } from "../AppBar/AppBar";
-import { OutletBox, FooterStyled } from "./Layout.styled";
+import { OutletBox, FooterStyled, GitLink } from "./Layout.styled";
 
 export const Layout = () => {
   return (
@@ -14,11 +15,13 @@ export const Layout = () => {
           <Outlet />
         </OutletBox>
       </Suspense>
-      {/* <FooterStyled>
+      <FooterStyled>
         <p>Crated by</p>
 
-        <a href=""> VasilenkoYuri</a>
-      </FooterStyled> */}
+        <GitLink href="https://github.com/VasilenkoYurii">
+          <FaGithub /> VasilenkoYuri
+        </GitLink>
+      </FooterStyled>
       <Toaster position="top-right" reverseOrder={false} />
     </>
   );
