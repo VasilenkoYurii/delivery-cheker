@@ -5,7 +5,7 @@ import {
   clearDataInvoices,
   getOfficeListByCity,
 } from "./operations";
-import { Office, InvoiceState } from "../interfaces/interfaces";
+import { Office, InvoiceState, InvoiceData } from "../interfaces/interfaces";
 
 const initialState: InvoiceState = {
   invoiceData: {
@@ -28,11 +28,22 @@ const invoiceSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getInvoiceData.fulfilled, (state, { payload }) => {
-        const newInvoiceData = {
-          status: payload.Status,
-          sending: payload.WarehouseSender,
-          receiving: payload.WarehouseRecipient,
+        console.log(payload);
+
+        let newInvoiceData: InvoiceData = {
+          status: "ТТН не знайдено",
+          sending: "",
+          receiving: "",
         };
+
+        if (payload.Status !== undefined) {
+          newInvoiceData = {
+            status: payload.Status,
+            sending: payload.WarehouseSender,
+            receiving: payload.WarehouseRecipient,
+          };
+        }
+
         if (!state.userDataInvoices.includes(payload.Number)) {
           state.userDataInvoices.unshift(payload.Number);
         }

@@ -5,6 +5,18 @@ import { getOfficeListByCity } from "../../redux/operations";
 import { Office } from "../../interfaces/interfaces";
 import { selectOfficeList } from "../../redux/selectors";
 
+import {
+  Container,
+  PageTitle,
+  Form,
+  Label,
+  Input,
+  SubmitButton,
+  ListItem,
+  OfficeList,
+  PaginationContainer,
+} from "./OfficesPage.styled";
+
 export const OfficesPage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const officeList: Office[] = useSelector(selectOfficeList);
@@ -23,46 +35,47 @@ export const OfficesPage = () => {
   const currentItems = officeList.slice(firstIndex, lastIndex);
 
   return (
-    <div>
-      <p>OfficesPage</p>
+    <Container>
+      <div>
+        <PageTitle>Пошук відділень та поштоматів у вашому місті</PageTitle>
 
-      <form onSubmit={hendleSubmit}>
-        <label>
-          <input
-            type="text"
-            placeholder="Enter a city"
-            required
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
+        <Form onSubmit={hendleSubmit}>
+          <Label>
+            <Input
+              type="text"
+              placeholder="Enter a city"
+              required
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </Label>
+          <SubmitButton type="submit">Submit</SubmitButton>
+        </Form>
+      </div>
 
-      <ul>
+      <OfficeList>
         {currentItems.map(({ SiteKey, Description }) => {
-          return <li key={SiteKey}>{Description}</li>;
+          return <ListItem key={SiteKey}>{Description}</ListItem>;
         })}
-      </ul>
+      </OfficeList>
 
-      {/* Pagination */}
       {officeList.length > itemsPerPage && (
-        <div>
+        <PaginationContainer>
           <button
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
-            Previous
+            {"<"}
           </button>
-          <span>Page {currentPage}</span>
+          <span>Сторінка {currentPage}</span>
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={lastIndex >= officeList.length}
           >
-            Next
+            {">"}
           </button>
-        </div>
+        </PaginationContainer>
       )}
-    </div>
+    </Container>
   );
 };

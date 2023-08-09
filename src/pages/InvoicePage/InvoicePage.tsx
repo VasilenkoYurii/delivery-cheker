@@ -9,7 +9,19 @@ import {
   selectIsLoading,
   selectUserDataInvoisec,
 } from "../../redux/selectors";
-import { Container, InfoBox } from "./InvoicePage.styled";
+import {
+  Container,
+  InfoBox,
+  PageTitle,
+  Form,
+  Label,
+  Input,
+  SubmitButton,
+  DescriptionContainer,
+  InvoiceHistoryContainer,
+  InvoiceButton,
+  SpanBold,
+} from "./InvoicePage.styled";
 
 export const InvoicePage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -36,61 +48,72 @@ export const InvoicePage = () => {
 
   return (
     <Container>
-      <h2>Отримати статус посилки за номером ТТН</h2>
-      <form onSubmit={hendleSubmit}>
-        <label>
-          <input
-            type="text"
-            pattern="[0-9]{14}"
-            placeholder="Enter a 14-digit number"
-            maxLength={14}
-            required
-            value={invoice}
-            onChange={(e) => setInvoice(e.target.value)}
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-
-      <InfoBox>
-        <div>
-          {isLoading ? (
-            <RotatingLines
-              strokeColor="#fa4a3b"
-              strokeWidth="5"
-              animationDuration="0.75"
-              width="96"
-              visible={true}
+      <div>
+        <PageTitle>Отримати статус посилки за номером ТТН</PageTitle>
+        <Form onSubmit={hendleSubmit}>
+          <Label>
+            <Input
+              type="text"
+              pattern="[0-9]{14}"
+              placeholder="Номер ТТН"
+              maxLength={14}
+              required
+              value={invoice}
+              onChange={(e) => setInvoice(e.target.value)}
             />
-          ) : invoiseData.status === "" ? (
-            <h3>Тут буде інформація стосовно вашої посилки</h3>
-          ) : (
-            <ul>
-              <li>Статус доставки: {invoiseData.status}</li>
-              <li>Відправлено: {invoiseData.sending}</li>
-              <li>Отримано: {invoiseData.receiving}</li>
-            </ul>
-          )}
-        </div>
+          </Label>
+          <SubmitButton type="submit">ВІДПРАВИТИ</SubmitButton>
+        </Form>
 
-        <div>
-          <h3>Історія</h3>
-          <button onClick={hendleClearDataInvoices}>Очистить историю</button>
-          {userDataInvoisec.length !== 0 && (
-            <ul>
-              {userDataInvoisec.map((number, index) => {
-                return (
-                  <li key={index}>
-                    <button onClick={() => hendleClick(number)}>
-                      {number}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
-      </InfoBox>
+        <InfoBox>
+          <DescriptionContainer>
+            {isLoading ? (
+              <RotatingLines
+                strokeColor="#fa4a3b"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="96"
+                visible={true}
+              />
+            ) : invoiseData.status === "" ? (
+              <h3>Тут буде інформація стосовно вашої посилки</h3>
+            ) : (
+              <ul>
+                <li>
+                  <SpanBold>Статус доставки:</SpanBold> {invoiseData.status}
+                </li>
+                <li>
+                  {" "}
+                  <SpanBold>Відправлено:</SpanBold> {invoiseData.sending}
+                </li>
+                <li>
+                  {" "}
+                  <SpanBold>Отримано:</SpanBold> {invoiseData.receiving}
+                </li>
+              </ul>
+            )}
+          </DescriptionContainer>
+        </InfoBox>
+      </div>
+      <InvoiceHistoryContainer>
+        <h3>Історія переглядів</h3>
+        <InvoiceButton onClick={hendleClearDataInvoices}>
+          Видалити историю
+        </InvoiceButton>
+        {userDataInvoisec.length !== 0 && (
+          <ul>
+            {userDataInvoisec.map((number, index) => {
+              return (
+                <li key={index}>
+                  <InvoiceButton onClick={() => hendleClick(number)}>
+                    {number}
+                  </InvoiceButton>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </InvoiceHistoryContainer>
     </Container>
   );
 };
