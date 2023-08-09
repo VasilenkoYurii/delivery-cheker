@@ -1,8 +1,4 @@
-interface InvoiceData {
-  status: string;
-  sending: string;
-  receiving: string;
-}
+import { InvoiceData, Office } from "../interfaces/interfaces";
 
 export const selectInvoiceData = (state: {
   invoice: { invoiceData: InvoiceData };
@@ -16,5 +12,5 @@ export const selectIsLoading = (state: { invoice: { isLoading: boolean } }) =>
   state.invoice.isLoading;
 
 export const selectOfficeList = (state: {
-  invoice: { officeList: object[] };
+  invoice: { officeList: Office[] };
 }) => state.invoice.officeList;

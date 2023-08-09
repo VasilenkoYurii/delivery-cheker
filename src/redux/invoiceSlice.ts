@@ -5,17 +5,7 @@ import {
   clearDataInvoices,
   getOfficeListByCity,
 } from "./operations";
-
-interface InvoiceState {
-  invoiceData: {
-    status: string;
-    sending: string;
-    receiving: string;
-  };
-  userDataInvoices: string[];
-  isLoading: boolean;
-  officeList: object[];
-}
+import { Office, InvoiceState, InvoiceData } from "../interfaces/interfaces";
 
 const initialState: InvoiceState = {
   invoiceData: {
@@ -38,11 +28,22 @@ const invoiceSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getInvoiceData.fulfilled, (state, { payload }) => {
-        const newInvoiceData = {
-          status: payload.Status,
-          sending: payload.WarehouseSender,
-          receiving: payload.WarehouseRecipient,
+        console.log(payload);
+
+        let newInvoiceData: InvoiceData = {
+          status: "ТТН не знайдено",
+          sending: "",
+          receiving: "",
         };
+
+        if (payload.Status !== undefined) {
+          newInvoiceData = {
+            status: payload.Status,
+            sending: payload.WarehouseSender,
+            receiving: payload.WarehouseRecipient,
+          };
+        }
+
         if (!state.userDataInvoices.includes(payload.Number)) {
           state.userDataInvoices.unshift(payload.Number);
         }
@@ -64,7 +65,11 @@ const invoiceSlice = createSlice({
         state.userDataInvoices = [];
       })
       .addCase(getOfficeListByCity.fulfilled, (state, { payload }) => {
-        state.officeList = payload.data;
+        const newList = payload.data.map(({ Description, SiteKey }: Office) => {
+          return { Description, SiteKey };
+        });
+
+        state.officeList = newList;
 
         toast.success(
           `У вашому місті поштоматів та відділень Нової пошти знайдено: ${payload.data.length}!`,

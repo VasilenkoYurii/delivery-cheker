@@ -28,7 +28,15 @@ export const getInvoiceData = createAsyncThunk(
         getStatusData
       );
 
-      console.log(response.data.data[0]);
+      if (response.data.success === false) {
+        return {
+          Status: "ТТН не знайдено",
+          WarehouseSender: "",
+          WarehouseRecipient: "",
+          Number: credentials,
+        };
+      }
+      console.log(response.data);
 
       return response.data.data[0];
     } catch (e: any) {
