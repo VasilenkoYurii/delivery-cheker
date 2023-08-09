@@ -86,3 +86,10 @@ export const PaginationContainer = styled.div`
   justify-content: center;
   gap: 5px;
 `;
+
+export const LoaderContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

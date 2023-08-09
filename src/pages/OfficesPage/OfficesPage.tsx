@@ -3,8 +3,8 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { getOfficeListByCity } from "../../redux/operations";
 import { Office } from "../../interfaces/interfaces";
-import { selectOfficeList } from "../../redux/selectors";
-
+import { selectOfficeList, selectIsLoading } from "../../redux/selectors";
+import { RotatingLines } from "react-loader-spinner";
 import {
   Container,
   PageTitle,
@@ -15,11 +15,13 @@ import {
   ListItem,
   OfficeList,
   PaginationContainer,
+  LoaderContainer,
 } from "./OfficesPage.styled";
 
 export const OfficesPage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const officeList: Office[] = useSelector(selectOfficeList);
+  const isLoading = useSelector(selectIsLoading);
   const [city, setCity] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 100;
@@ -53,12 +55,23 @@ export const OfficesPage = () => {
         </Form>
       </div>
 
-      <OfficeList>
-        {currentItems.map(({ SiteKey, Description }) => {
-          return <ListItem key={SiteKey}>{Description}</ListItem>;
-        })}
-      </OfficeList>
-
+      {isLoading ? (
+        <LoaderContainer>
+          <RotatingLines
+            strokeColor="#fa4a3b"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
+          />
+        </LoaderContainer>
+      ) : (
+        <OfficeList>
+          {currentItems.map(({ SiteKey, Description }) => {
+            return <ListItem key={SiteKey}>{Description}</ListItem>;
+          })}
+        </OfficeList>
+      )}
       {officeList.length > itemsPerPage && (
         <PaginationContainer>
           <button

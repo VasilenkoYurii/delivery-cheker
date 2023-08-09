@@ -6,8 +6,6 @@ const API_KEY = "4adb1c473346a6d181476c1dc87182ee";
 export const getInvoiceData = createAsyncThunk(
   "auth/getInvoiceData",
   async (credentials: string, thunkAPI: any) => {
-    console.log(credentials);
-
     const getStatusData = {
       apiKey: API_KEY,
       modelName: "TrackingDocument",
@@ -36,7 +34,6 @@ export const getInvoiceData = createAsyncThunk(
           Number: credentials,
         };
       }
-      console.log(response.data);
 
       return response.data.data[0];
     } catch (e: any) {
@@ -47,7 +44,7 @@ export const getInvoiceData = createAsyncThunk(
 
 export const clearDataInvoices = createAsyncThunk(
   "auth/clearDataInvoices",
-  async (credentials, _: any) => {
+  async (__, _: any) => {
     return;
   }
 );
@@ -55,8 +52,6 @@ export const clearDataInvoices = createAsyncThunk(
 export const getOfficeListByCity = createAsyncThunk(
   "auth/getOfficeListByCity",
   async (credentials: string, thunkAPI: any) => {
-    console.log(credentials);
-
     const requestData = {
       apiKey: API_KEY,
       modelName: "Address",
@@ -72,8 +67,6 @@ export const getOfficeListByCity = createAsyncThunk(
         "https://api.novaposhta.ua/v2.0/json/",
         requestData
       );
-
-      console.log(response.data);
 
       return response.data;
     } catch (e: any) {
