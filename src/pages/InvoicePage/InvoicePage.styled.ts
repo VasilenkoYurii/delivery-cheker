@@ -36,9 +36,15 @@ export const PageTitle = styled.h2`
   text-transform: uppercase;
   width: 300px;
   font-size: 20px;
+  font-size: 14px;
+  text-align: center;
   margin-bottom: 20px;
+  align-items: center;
 
   @media screen and (min-width: 768px) {
+    font-size: 20px;
+
+    text-align: normal;
     width: 400px;
   }
 
@@ -76,14 +82,15 @@ export const Input = styled.input`
 
 export const SubmitButton = styled.button`
   background-color: white;
+  color: #000;
   border-color: #fa4a3b;
 `;
 
 export const DescriptionContainer = styled.div`
   width: 300px;
   max-height: 400px;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
 
   border-bottom: 1px solid #000;
 
@@ -122,6 +129,8 @@ export const InvoiceButton = styled.button`
   width: 280px;
   cursor: pointer;
   background-color: white;
+  color: #000;
+  border: 1px solid #000;
 
   @media screen and (min-width: 768px) {
     width: 180px;
@@ -130,4 +139,11 @@ export const InvoiceButton = styled.button`
 
 export const SpanBold = styled.span`
   font-weight: 700;
+`;
+
+export const LoaderContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

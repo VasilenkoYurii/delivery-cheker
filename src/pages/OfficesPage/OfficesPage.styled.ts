@@ -25,9 +25,15 @@ export const PageTitle = styled.h2`
   text-transform: uppercase;
   width: 300px;
   font-size: 20px;
+  font-size: 14px;
+  text-align: center;
   margin-bottom: 20px;
+  align-items: center;
 
   @media screen and (min-width: 768px) {
+    font-size: 20px;
+
+    text-align: normal;
     width: 400px;
   }
 
@@ -65,6 +71,7 @@ export const Input = styled.input`
 
 export const SubmitButton = styled.button`
   background-color: white;
+  color: #000;
   border-color: #fa4a3b;
 `;
 

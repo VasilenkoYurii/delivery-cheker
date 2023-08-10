@@ -4,17 +4,19 @@ import { NavLink } from "react-router-dom";
 export const Nav = styled.nav`
   display: flex;
   align-items: center;
+  justify-content: center;
 
   gap: 15px;
 
   @media screen and (min-width: 768px) {
+    justify-content: normal;
     gap: 40px;
   }
 `;
 
 export const NavLinkStyled = styled(NavLink)`
   text-transform: uppercase;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 400;
   color: black;
 
@@ -33,6 +35,7 @@ export const NavLinkStyled = styled(NavLink)`
   }
 
   @media screen and (min-width: 768px) {
+    font-size: 18px;
     font-size: 22px;
   }
 `;

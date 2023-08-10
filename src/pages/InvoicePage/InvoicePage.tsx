@@ -21,6 +21,7 @@ import {
   InvoiceHistoryContainer,
   InvoiceButton,
   SpanBold,
+  LoaderContainer,
 } from "./InvoicePage.styled";
 
 export const InvoicePage = () => {
@@ -67,15 +68,20 @@ export const InvoicePage = () => {
         <InfoBox>
           <DescriptionContainer>
             {isLoading ? (
-              <RotatingLines
-                strokeColor="#fa4a3b"
-                strokeWidth="5"
-                animationDuration="0.75"
-                width="96"
-                visible={true}
-              />
+              <LoaderContainer>
+                <RotatingLines
+                  strokeColor="#fa4a3b"
+                  strokeWidth="5"
+                  animationDuration="0.75"
+                  width="96"
+                  visible={true}
+                />
+              </LoaderContainer>
             ) : invoiseData.status === "" ? (
-              <h3>Тут буде інформація стосовно вашої посилки</h3>
+              <h3>
+                Інформація стосовно вашої посилки з'явиться після введення
+                номера ТТН
+              </h3>
             ) : (
               <ul>
                 <li>
