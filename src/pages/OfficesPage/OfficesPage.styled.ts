@@ -33,7 +33,7 @@ export const PageTitle = styled.h2`
   @media screen and (min-width: 768px) {
     font-size: 20px;
 
-    text-align: normal;
+    text-align: inherit;
     width: 400px;
   }
 

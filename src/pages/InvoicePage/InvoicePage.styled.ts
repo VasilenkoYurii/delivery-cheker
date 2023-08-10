@@ -44,7 +44,7 @@ export const PageTitle = styled.h2`
   @media screen and (min-width: 768px) {
     font-size: 20px;
 
-    text-align: normal;
+    text-align: inherit;
     width: 400px;
   }
 
@@ -127,6 +127,7 @@ export const InvoiceHistoryContainer = styled.div`
 
 export const InvoiceButton = styled.button`
   width: 280px;
+  height: 20px;
   cursor: pointer;
   background-color: white;
   color: #000;
