@@ -4,19 +4,10 @@ import { useDispatch, useSelector } from "react-redux/es/exports";
 import { getOfficeListByCity } from "../../redux/operations";
 import { Office } from "../../interfaces/interfaces";
 import { selectOfficeList, selectIsLoading } from "../../redux/selectors";
-import { RotatingLines } from "react-loader-spinner";
-import {
-  Container,
-  PageTitle,
-  Form,
-  Label,
-  Input,
-  SubmitButton,
-  ListItem,
-  OfficeList,
-  PaginationContainer,
-  LoaderContainer,
-} from "./OfficesPage.styled";
+import { GetDataForm } from "../../components/GetInvoiceForm/GetDataForm";
+import { Pagination } from "../../components/Pagination/Pagination";
+import { Loader } from "../../components/Loader/Loader";
+import { Container, ListItem, OfficeList } from "./OfficesPage.styled";
 
 export const OfficesPage = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -34,37 +25,26 @@ export const OfficesPage = () => {
 
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
-  const currentItems = officeList.slice(firstIndex, lastIndex);
+  const currentItems: Office[] = officeList.slice(firstIndex, lastIndex);
+
+  console.log(currentItems);
 
   return (
     <Container>
       <div>
-        <PageTitle>Пошук відділень та поштоматів у вашому місті</PageTitle>
-
-        <Form onSubmit={hendleSubmit}>
-          <Label>
-            <Input
-              type="text"
-              placeholder="Enter a city"
-              required
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </Label>
-          <SubmitButton type="submit">Submit</SubmitButton>
-        </Form>
+        <GetDataForm
+          hendleSubmit={hendleSubmit}
+          setState={setCity}
+          value={city}
+          title={"Пошук відділень та поштоматів у вашому місті"}
+          buttonContent={"ЗНАЙТИ"}
+          placeholder={"Ваше місто"}
+          pattern={".*"}
+        />
       </div>
 
       {isLoading ? (
-        <LoaderContainer>
-          <RotatingLines
-            strokeColor="#fa4a3b"
-            strokeWidth="5"
-            animationDuration="0.75"
-            width="96"
-            visible={true}
-          />
-        </LoaderContainer>
+        <Loader />
       ) : (
         <OfficeList>
           {currentItems.map(({ SiteKey, Description }) => {
@@ -73,21 +53,12 @@ export const OfficesPage = () => {
         </OfficeList>
       )}
       {officeList.length > itemsPerPage && (
-        <PaginationContainer>
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            {"<"}
-          </button>
-          <span>Сторінка {currentPage}</span>
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={lastIndex >= officeList.length}
-          >
-            {">"}
-          </button>
-        </PaginationContainer>
+        <Pagination
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          lastIndex={lastIndex}
+          officeList={officeList}
+        />
       )}
     </Container>
   );

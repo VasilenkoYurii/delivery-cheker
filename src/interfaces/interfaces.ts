@@ -19,3 +19,31 @@ export interface InvoiceData {
   sending: string;
   receiving: string;
 }
+
+export interface GetDataProps {
+  hendleSubmit: Function;
+  setState: Function;
+  value: string;
+  title: string;
+  buttonContent: string;
+  placeholder: string;
+  pattern: string;
+}
+
+export interface InvoiseInfoProps {
+  isLoading: boolean;
+  invoiseData: InvoiceData;
+}
+
+export interface InvoiceHistoryProps {
+  hendleClearDataInvoices: Function;
+  userDataInvoisec: string[];
+  hendleClick: Function;
+}
+
+export interface PaginationProps {
+  setCurrentPage: Function;
+  currentPage: number;
+  lastIndex: number;
+  officeList: Office[];
+}
